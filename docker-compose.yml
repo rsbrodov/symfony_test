@@ -1,26 +1,45 @@
-# docker-compose.yml
-version: '3.8'
+version: '3.0'
+
 services:
+  nginx:
+    build:
+      context: ./docker/nginx
+    volumes:
+      - ./:/symfony
+    container_name: ${PROJECT_NAME}-nginx
+    restart: always
+    ports:
+      - "8081:80"
+
+  php-fpm:
+    build:
+      context: ./docker/php-fpm
+    volumes:
+      - ./:/symfony
+    restart: always
+    container_name: ${PROJECT_NAME}-php-fpm
+    depends_on:
+      - mysql
+
+  php-cli:
+    build:
+      context: ./docker/php-cli
+    volumes:
+      - ./:/symfony
+    command: sleep 10000
+    container_name: ${PROJECT_NAME}-php-cli
+
   mysql:
     image: mysql:8.0
     restart: on-failure
+    volumes:
+      - mysql:/var/lib/mysql
+    ports:
+      - "3307:3306"  
+    container_name: ${PROJECT_NAME}-mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
 
-  php:
-    build:
-      context: .
-      dockerfile: docker/php/Dockerfile
-    restart: on-failure
-    user: ${LOCAL_USER}
-
-  nginx:
-    image: nginx:1.19.0-alpine
-    restart: on-failure
-    depends_on:
-      - php
-
-  #adminer:
-  #  image: adminer
-  #  restart: on-failure
+volumes:
+  mysql:
