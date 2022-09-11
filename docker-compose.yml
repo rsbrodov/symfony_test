@@ -1,21 +1,26 @@
-version: '3'
-
+# docker-compose.yml
+version: '3.8'
 services:
-###> doctrine/doctrine-bundle ###
-  database:
-    image: postgres:${POSTGRES_VERSION:-14}-alpine
+  mysql:
+    image: mysql:8.0
+    restart: on-failure
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-app}
-      # You should definitely change the password in production
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
-      POSTGRES_USER: ${POSTGRES_USER:-app}
-    volumes:
-      - db-data:/var/lib/postgresql/data:rw
-      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./docker/db/data:/var/lib/postgresql/data:rw
-###< doctrine/doctrine-bundle ###
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
 
-volumes:
-###> doctrine/doctrine-bundle ###
-  db-data:
-###< doctrine/doctrine-bundle ###
+  php:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    restart: on-failure
+    user: ${LOCAL_USER}
+
+  nginx:
+    image: nginx:1.19.0-alpine
+    restart: on-failure
+    depends_on:
+      - php
+
+  #adminer:
+  #  image: adminer
+  #  restart: on-failure
