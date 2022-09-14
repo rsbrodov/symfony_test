@@ -13,3 +13,17 @@
 #    format_listener:
 #        rules:
 #            - { path: ^/api, prefer_extension: true, fallback_format: json, priorities: [ json, html ] }
+
+
+# Read the documentation: https://symfony.com/doc/master/bundles/FOSRestBundle/index.html
+# fos_rest:
+#     param_fetcher_listener:  true
+#     allowed_methods_listener:  true
+#     view:
+#         view_response_listener:  true
+#     exception:
+#         exception_controller: 'fos_rest.exception.controller:showAction'
+#     format_listener:
+#         rules:
+#             - { path: ^/api, prefer_extension: false, fallback_format: json, priorities: [ json ] }
+#             - { path: ^/, prefer_extension: true, fallback_format: html, priorities: [ html ] }

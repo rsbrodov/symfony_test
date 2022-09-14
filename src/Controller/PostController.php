@@ -60,6 +60,7 @@ class PostController extends AbstractController
     /**
      * @Route("/post/create", name="post_create")
      */
+    
     public function create(Environment $twig, Request $request, EntityManagerInterface $entityManagerInterface)
     {
         $post = new Post;

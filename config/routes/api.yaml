@@ -1,0 +1,5 @@
+# app.api.post:
+#     type:         rest
+#     resource:     App\Controller\Api\PostApiController
+#     name_prefix:  api_ # Our precious parameter
+#     prefix: api
