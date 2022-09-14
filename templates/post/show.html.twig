@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Hello PostController!
+  
+{% endblock %}
+
+{% block body %}
+  <div class="example-wrapper">
+    <div class="block-post">
+      <p class="text-center bold">{{ post.title }}</p>
+      <p>{{ post.description }}</p>
+    </div>
+    <hr>
+
+    <div class="row">
+      {% for comment in post.comments %}
+        <div class="block">
+          <div class="post">
+            <p class="text-center bold">{{ comment.user.name }}</p>
+            <p>{{ comment.text }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </row>
+    <div class="container">  
+      <p>Оставьте комментарий:</p>
+        {{ form_start(form) }}
+        {{ form_row(form.text, {label: 'Комментарий', "attr": {"class": "form-control" } }) }}
+        <button type="submit" class="btn btn-success mt-3">Сохранить</button>
+        {{ form_end(form) }}
+    </div>
+  </div>
+  <style>
+    .block{
+      border: 1px solid #a6a6a6;
+      border-radius: 5px;
+      width: 100%;
+      margin: 5px;
+  }
+  .bold{
+    font-weight: bold;
+  }
+
+
+  .example-wrapper {
+    margin: 1em auto;
+    max-width: 800px;
+    width: 95%;
+    font: 18px/1.5 sans-serif;
+  }
+  .example-wrapper code {
+    background: #f5f5f5;
+    padding: 2px 6px;
+  }
+
+</style>
+{% endblock %}

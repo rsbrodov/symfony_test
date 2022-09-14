@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Hello PostController!
+{% endblock %}
+
+{% block body %}
+  
+
+<h1 class="text-center">Создание новости</h1>
+
+<div class="container">
+    <div class="registration">
+        {{ form_start(form) }}
+        {{ form_row(form.title, {label: 'Название', "attr": {"class": "form-control" } }) }}
+        {{ form_row(form.description, {label: 'Описание', "attr": {"class": "form-control" } }) }}
+        <input type="hidden" name="_target_path" value="/post"/>
+        <button type="submit" class="btn btn-success mt-3">Сохранить</button>
+        {{ form_end(form) }}
+    </div>   
+</div>   
+{% endblock %}
